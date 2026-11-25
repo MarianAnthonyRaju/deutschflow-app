@@ -29,3 +29,28 @@ Isolated Chromium: loaded all 60 level/mode combinations; graded 24 comprehensio
 
 ## Royal Blue update
 This appearance-only update preserves the exercise databases, grading logic and storage keys. Replace the files in your existing repository and deploy to the same HTTPS URL to retain browser-local progress. Export a JSON backup first. The app manifest identity is unchanged; the service worker cache name is bumped so old green assets are replaced when the updated worker activates. If an old screen remains, close all app tabs/windows and reopen online. Do not clear site data. The installed home-screen icon may refresh on the browser’s own schedule. A separate origin requires importing a backup.
+
+## Vocabulary Studio update
+
+Open **Practice vocabulary** to study the built-in 579 distinct German entries. Estimated learning-level distribution: A1 166, A2 100, B1 89, B2 82, C1 69, C2 73. Levels are pedagogical estimates, not official word lists. The starter words and glosses were authored for this app; they have not undergone professional linguistic proofreading. The vocabulary starter collection is not a 16,000-word database. Example sentences appear only when an existing matching example or an authored/imported example is available; verb conjugations are supplied for selected verbs, not all verbs.
+
+Four modes: flashcards (self-rated English recall), written German recall (strict spelling), listening dictation (German device voice), and speaking (browser-recognized word match, not pronunciation assessment). Review intervals for successive remembered answers: 1, 3, 7, 14, 30, 60 days; an incorrect answer resets the stage and is immediately due. Stage 4+ is labelled retained, not guaranteed mastery. Daily new-word goal defaults to 20. Browse all words bypasses the daily queue. Vocabulary from a current exercise is available after grading and matches exact dictionary/plural forms, not every inflection. Existing sentence bank and passages are unchanged.
+
+### Expand the dictionary
+
+Use the CSV template inside the vocabulary dialog. CSV header: `word,english,level,topic,pos,article,plural,conjugation,example_de,example_en`. Only word and English meaning are required; missing level defaults to B1. JSON imports are arrays of rows containing the same columns in that order. Imports deduplicate by exact NFC-normalized headword, validate fields, and skip bad rows. Maximum combined entries 16,000; actual capacity also depends on local browser storage (especially for long examples). No external dictionary was bundled because the download was unavailable in the build environment. For optional external data, use only appropriately licensed datasets; verify their translations and CEFR tags before relying on them. Imported data is not automatically linguistically verified.
+
+The original local storage key (`satzwerk.v2`) and exercise identifiers are unchanged. Vocabulary data is added to the existing progress object; the main JSON backup includes imported entries and word-review history. Vocabulary CSV export contains per-word review statistics. Export your backup before replacing website files and use the same HTTPS origin/browser to preserve data. Upload all files to the existing GitHub repository root; Cloudflare Pages configuration stays unchanged. Service worker cache version has been incremented. Reopen online to pick up the update. Standalone HTML preview is for local testing, not PWA installation.
+
+### Verification
+
+Isolated Chromium tests cover all four original skills at each level, vocabulary modes at each level, flashcard and typed recall, review scheduling, import/deduplication, backup export and restore, mobile width, and simulated local storage. Actual speech/audio, service worker installation and live hosting are not tested on a real device. The full 16,000-word target has not been populated.
+
+
+## Grammar Coach update
+- After submitting any sentence-building, translation, error correction, free-writing, speaking, sentence-meaning or dictation exercise, a model-based grammar explanation appears whether or not the response was accepted.
+- Includes sentence-part roles, finite verb and clause order, relevant cases and inflection, simplified terminology, a model/contrast example, English meaning and comparison hints for the submitted response.
+- Covers all 13,000 sentence records using annotations for 72 original sentences and 31 generation templates; no changes to sentence IDs, original data, vocabulary, scoring or storage key. Passage questions retain their existing evidence explanations; the coach does not parse arbitrary passages.
+- Word differences are comparison hints, not a full language diagnosis. Accepted alternatives refer to the annotated main model; speech recognition can introduce errors. No external API required.
+- To update, back up progress and replace all files in your existing repository, including grammar.js and sw.js. Keep the existing website origin. Browser storage is local. Reopen the hosted PWA online to pick up the new service worker.
+- Verification: automated role coverage across all 13,000 model sentences; isolated Chromium tests using simulated storage and speaking transcripts; actual hosted PWA updates, browser persistence and device audio/microphone require live testing.
